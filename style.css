@@ -172,7 +172,7 @@ header img{
 .main-container{
   display: grid;
   grid-template-columns: repeat(3,1fr);
-  grid-template-rows: 22.7rem 50rem 50rem;
+  grid-template-rows: 22.7rem;
   gap: .6rem;
   margin: 6rem 2rem 1rem 2rem;
   height: 100vh;
