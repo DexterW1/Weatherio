@@ -1,0 +1,411 @@
+:root {
+
+    /**
+     * COLOR
+     */
+  
+    --primary: #B5A1E5; 
+    --on-primary: #100E17; 
+    --background: #131214;
+    --on-background: #EAE6F2;
+    --surface: #1D1C1F;
+    --on-surface: #DDDAE5;
+    --on-surface-variant: #7B7980; 
+    --on-surface-variant-2: #B9B6BF;
+    --outline: #3E3D40;
+    --bg-aqi-1: #89E589;
+    --on-bg-aqi-1: #1F331F;
+    --bg-aqi-2: #E5DD89;
+    --on-bg-aqi-2: #33311F;
+    --bg-aqi-3: #E5C089;
+    --on-bg-aqi-3: #332B1F;
+    --bg-aqi-4: #E58989;
+    --on-bg-aqi-4: #331F1F;
+    --bg-aqi-5: #E589B7;
+    --on-bg-aqi-5: #331F29;
+    --white: hsl(0, 0%, 100%);
+    --white-alpha-4: hsla(0, 0%, 100%, 0.04);
+    --white-alpha-8: hsla(0, 0%, 100%, 0.08);
+    --black-alpha-10: hsla(0, 0%, 0%, 0.1);
+  
+    /* gradient colors */
+    --gradient-1: linear-gradient(180deg, hsla(270, 5%, 7%, 0) 0%, hsla(270, 5%, 7%, 0.8) 65%, hsl(270, 5%, 7%) 100%);
+    --gradient-2: linear-gradient(180deg, hsla(260, 5%, 12%, 0) 0%, hsla(260, 5%, 12%, 0.8) 65%, hsl(260, 5%, 12%) 100%);
+  
+    /**
+     * TYPOGRAPHY
+     */
+  
+    /* font family */
+    --ff-nunito-sans: 'Nunito Sans', sans-serif;
+  
+    /* font size */
+    --heading: 5.6rem;
+    --title-1: 2rem;
+    --title-2: 1.8rem;
+    --title-3: 1.6rem;
+    --body-1: 2.2rem;
+    --body-2: 2rem;
+    --body-3: 1.6rem;
+    --label-1: 1.4rem;
+    --label-2: 1.2rem;
+  
+    /* font weight */
+    --weight-regular: 400;
+    --weight-semiBold: 600;
+  
+    /**
+     * BOX SHADOW
+     */
+  
+    --shadow-1: 0px 1px 3px hsla(0, 0%, 0%, 0.5);
+    --shadow-2: 0px 3px 6px hsla(0, 0%, 0%, 0.4);
+  
+    /**
+     * BORDER RADIUS
+     */
+  
+    --radius-28: 28px;
+    --radius-16: 16px;
+    --radius-pill: 500px;
+    --radius-circle: 50%;
+  
+    /**
+     * TRANSITION
+     */
+  
+    --transition-short: 100ms ease;
+  
+  }
+
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--ff-nunito-sans);
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background: var(--background);
+}
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 100px;
+  z-index: 99;
+}
+
+
+header img{
+  width: 10rem;
+}
+.search-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.search-container button{
+  display: flex;
+  position: relative;
+  width: 10rem;
+  min-width: 8rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-left: .5rem;
+  border: 1px solid black;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-2);
+  background: var(--primary);
+  font-size: .9rem;
+  font-weight: 500;
+  padding-right: .3rem;
+  cursor: pointer;
+}
+.search-container button ion-icon{
+  padding-right: .6rem;
+  padding-left: .2rem;
+  font-size: 1.5rem;
+}
+.search-container input{
+  color: black;
+  margin-left: 1rem;
+  width: 40%;
+  height: 2.5rem;
+  border-radius: 30px;
+  border: none;
+  padding-left: .8rem;
+  box-shadow: var(--shadow-2);
+  background: var(--surface);
+}
+.search-container button:hover{
+  color:white;
+}
+.search-container button:active{
+  transform: translateY(2px);
+}
+
+/* Reused Style */
+.card{
+  background-color: var(--surface);
+}
+/* Main Container */
+.main-container{
+  gap: 2rem;
+  margin: 0;
+  width: 100%;
+}
+
+.now-container{
+  display: flex;
+  width: 100%;
+  margin: 0;
+  overflow-x: hidden;
+}
+.left-now-container{
+  position: relative;
+  flex: 0 0 350px;
+  margin: 8rem 2rem 5rem 5rem;
+  padding: 25px;
+  border-radius: 15px;
+  /* border: 2px solid white; */
+  width: 100%;
+  color: white;
+  align-self: start;
+}
+.left-now-container .temp-and-icon{
+  display: flex;
+  font-size: 4.5rem;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+.left-now-container #weather-descripiton{
+  margin: .3rem 0;
+}
+/* Create horizontal line */
+.left-now-container #weather-descripiton::after{
+  content: '';
+  position:absolute;
+  background: var(--outline);
+  height: 1px;
+  left: .7rem;
+  bottom: 105px;
+  width: 92%;
+}
+.left-now-container .day-location{
+  margin: 2rem 0 .5rem 0;
+  color: var(--on-surface-variant);
+}
+.left-now-container .day-location .day-container{
+  margin-bottom: 1rem;
+}
+.left-now-container .day-location #day{
+  margin-bottom: .3rem;
+  display: flex;
+}
+.left-now-container .day-location ion-icon{
+  padding-right: .3rem;
+}
+
+.left-now-container .day-location #location{
+  display: flex;
+}
+/* Main Content */
+.right-now-container{
+  color: white;
+  flex: 1 1 300px;
+  margin: 8rem 5rem 0 0;
+  border-radius: 15px;
+  padding: 10px;  
+  align-self: start;
+  /* border: 2px solid green;  */
+}
+
+/* Todays Highlights */
+.right-now-container h2{
+  padding-left: 1rem;
+  margin-top: 1rem;
+}
+/* resused */
+.card-sm{background-color: var(--black-alpha-10);}
+.info #subtitle{color: var(--on-surface-variant);}
+.title{color: var(--on-surface-variant);}
+.right-top-now-container{
+  display: flex;
+  width: 100%;
+}
+.air-quality-index{
+  padding: 1rem;
+  margin: 1rem;
+  width: 50%;
+}
+.air-quality-index .air{
+  display: flex;
+  justify-content: space-between;
+}
+.air #air-quality{
+  display: flex;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-aqi-1);
+  width: 5rem;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem;
+  font-size: .8rem;
+}
+.air-quality-index .info{
+  display: flex;
+  margin-top:2rem;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.info .data{
+  font-size: 2rem;
+}
+.info span{
+  font-size: 3rem;
+  margin-right: 1rem;
+}
+.air-quality-index .info #subtitle{text-align: center;}
+.sunrise-sunset{
+  margin: 1rem;
+  width: 50%;
+  padding: 1rem;
+}
+.sunrise-sunset .info{
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  justify-content: space-evenly;
+}
+
+.info ion-icon{
+  font-size: 3rem;
+  margin-right: 1rem;
+}
+.info{
+  margin-bottom: 1.5rem;
+}
+
+/* bottom-main-container */
+.right-bottom-now-container{
+  display: flex;
+  width: 100%;
+}
+
+.right-bottom-now-container .humidity,.pressure,.visibility,.feels-like{
+  margin: 1rem;
+  flex:1;
+  padding: 1rem;
+}
+.right-bottom-now-container .info1{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+}
+
+/* 5 day cast container */
+.left-containerfive{
+  position: absolute;
+  border-radius: 15px;
+  margin: 0 2rem 0 5rem;
+  padding: 25px;
+  width: 350px;
+  top: 31rem;
+
+}
+.left-five-container h2{
+  position: absolute;
+  margin: 0 2rem 0 5rem;
+  color: white;
+  top: 28.5rem;
+  padding-left: .7rem;
+}
+.cast-container{
+  display: flex;
+  color: var(--on-surface-variant);
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+}
+.cast-container .cast-icon-temp{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cast-container .cast-icon-temp ion-icon{
+  padding-right: 10px;
+  font-size: 1.8rem;
+  color: white;
+}
+.cast-container .cast-icon-temp p{
+  font-size: 1.8rem;
+  color: white;
+}
+.cast-container:last-child{
+  margin: 0;
+}
+
+
+/* today-at container */
+.today-at-container{
+  position: relative;
+  display: flex;
+}
+.today-at-container h2{
+  position: relative;
+  margin: 0 2rem 0 5rem;
+  color: white;
+  top: 1rem;
+  left: 24rem;
+}
+.today-at-cards-container{
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  top:3rem;
+  left: 15.56rem;
+  justify-content: space-between;
+  color: white;
+  flex: 0 1 70rem;
+  width: 80%;
+  border-radius: 15px;
+  margin-right: 1rem;
+  padding: 10px;  
+  background-color: var(--surface);
+}
+.time-card{
+  background-color: var(--black-alpha-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-right: 2rem;
+  padding: 20px 5px;
+  border-radius: 15px;
+  height: 8.3rem;
+}
+.time-card .time{
+  font-size: 1rem;
+}
+.time-card ion-icon{
+  font-size: 3rem;
+}
+.time-card .temp{
+  font-size: 1rem;
+}

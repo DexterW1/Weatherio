@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template</title>
+    <link rel="icon" type="image/png" href="https://www.google.com/s2/u/0/favicons?domain=css-tricks.com
+    "
+    ">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+    
+    <header>
+        <div class="search-container">
+            <img src="images/logo.png" alt="logo">
+            <input type="search" id="search" name="search" placeholder="Search City..." />
+            <button class="current-location"><ion-icon name="locate"></ion-icon>Current-location</button>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="now-container">
+            <div class="card left-now-container">
+                <h2>Now</h2>
+                <div class="temp-and-icon">
+                    <p>80&degf</p>
+                    <ion-icon name="sunny"></ion-icon>
+                </div>
+                <p id="weather-descripiton">Sunny</p>
+                <div class="day-location">
+                    <div class="day-container">
+                        <p id="day"><ion-icon name="calendar-clear"></ion-icon>Wednesday 20, Sep</p>
+                    </div>
+                    <div class="location-container">
+                        <p id="location"><ion-icon name="location"></ion-icon></ion-icon>San Marino, CA</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card right-now-container">
+                <h2>Todays Highlights</h2>
+                <div class="right-top-now-container">
+                    <div class="card-sm air-quality-index">
+                        <div class="title air">
+                            <h3>Air Quality Index</h3>
+                            <p id="air-quality">Very Poor</p>
+                        </div>
+                        <div class="info">
+                            <span class="material-symbols-outlined">air</span>
+                            <div class="info1">
+                                <p id="subtitle">PM2.5</p>
+                                <p class="data PM2.5 value">177</p>
+                            </div>
+                            <div class="info2">
+                                <p id="subtitle">SO2</p>
+                                <p class="data SO2 value">29.8</p>
+                            </div>
+                            <div class="info3">
+                                <p id="subtitle">NO2</p>
+                                <p class="data NO2 value">43.2</p>
+                            </div>
+                            <div class="info4">
+                                <p id="subtitle">O3</p>
+                                <p class="data O3 value">0.150</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-sm sunrise-sunset">
+                        <div class="title">
+                            <h3>Sunrise & Sunset</h3>
+                        </div>
+                        <div class="info">
+                            <ion-icon name="sunny"></ion-icon>
+                            <div class="info1">
+                                <p id="subtitle">Sunrise</p>
+                                <p class="data sunrise">7:23 AM</p>
+                            </div>
+                            <ion-icon name="moon"></ion-icon>
+                            <div class="info2">
+                                <p id="subtitle">Sunset</p>
+                                <p class="data sunset">6:23 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-bottom-now-container">
+                    <div class="card-sm humidity">
+                        <div class="title">
+                            <h3>Humidity</h3>
+                        </div>
+                        <div class="info">
+                            <div class="info1">
+                                <ion-icon name="water"></ion-icon>
+                                <p class="data">82%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-sm pressure">
+                        <div class="title">
+                            <h3>Pressure</h3>
+                        </div>
+                        <div class="info">
+                            <div class="info1">
+                                <span class="material-symbols-outlined">airwave</span>
+                                <p class="data">1025hPa</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-sm visibility">
+                        <div class="title">
+                            <h3>Visibility</h3>
+                        </div>
+                        <div class="info">
+                            <div class="info1">
+                                <ion-icon name="eye"></ion-icon>
+                                <p class="data">5 mi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-sm feels-like">
+                        <div class="title">
+                            <h3>Feels-Like</h3>
+                        </div>
+                        <div class="info">
+                            <div class="info1">
+                                <ion-icon name="thermometer"></ion-icon>
+                                <p class="data">73&degf</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="left-five-container">
+            <h2>5-Day Forecast</h2>
+            <div class="card left-containerfive">
+                <div class="cast-container first-day-cast">
+                    <div class="cast-icon-temp">
+                        <ion-icon name="cloudy"></ion-icon>
+                        <p class="fivecast-temp">73&degf</p>
+                    </div>
+                    <p class="fivecast-date">21 Sep</p>
+                    <p class="fivecast-day">Thur</p>
+                </div>
+                <div class="cast-container second-day-cast">
+                    <div class="cast-icon-temp">
+                        <ion-icon name="sunny"></ion-icon>
+                        <p class="fivecast-temp">73&degf</p>
+                    </div>
+                    <p class="fivecast-date">22 Sep</p>
+                    <p class="fivecast-day">Fri</p>
+                </div>
+                <div class="cast-container third-day-cast">
+                    <div class="cast-icon-temp">
+                        <ion-icon name="thunderstorm"></ion-icon>
+                        <p class="fivecast-temp">73&degf</p>
+                    </div>
+                    <p class="fivecast-date">23 Sep</p>
+                    <p class="fivecast-day">Sat</p>
+                </div>
+                <div class="cast-container fourth-day-cast">
+                    <div class="cast-icon-temp">
+                        <ion-icon name="moon"></ion-icon>
+                        <p class="fivecast-temp">73&degf</p>
+                    </div>
+                    <p class="fivecast-date">24 Sep</p>
+                    <p class="fivecast-day">Sun</p>
+                </div>
+                <div class="cast-container fifth-day-cast">
+                    <div class="cast-icon-temp">
+                        <ion-icon name="rainy"></ion-icon>
+                        <p class="fivecast-temp">73&degf</p>
+                    </div>
+                    <p class="fivecast-date">25 Sep</p>
+                    <p class="fivecast-day">Mon</p>
+                </div>
+            </div>
+        </div>
+        <div class="today-at-container">
+            <h2>Today At</h2>
+            <div class="today-at-cards-container">
+                <div class="card time-card">
+                    <p class="time">6 AM</p>
+                    <ion-icon name="cloudy"></ion-icon>
+                    <p class="temp">84&degf</p>
+                </div>
+                <div class="card time-card">
+                    <p class="time">6 AM</p>
+                    <ion-icon name="cloudy"></ion-icon>
+                    <p class="temp">84&degf</p>
+                </div>
+                <div class="card time-card">
+                    <p class="time">6 AM</p>
+                    <ion-icon name="cloudy"></ion-icon>
+                    <p class="temp">84&degf</p>
+                </div>
+                <div class="card time-card">
+                    <p class="time">6 AM</p>
+                    <ion-icon name="cloudy"></ion-icon>
+                    <p class="temp">84&degf</p>
+                </div>
+                <div class="card time-card">
+                    <p class="time">6 AM</p>
+                    <ion-icon name="cloudy"></ion-icon>
+                    <p class="temp">84&degf</p>
+                </div>
+                <div class="card time-card">
+                    <p class="time">6 AM</p>
+                    <ion-icon name="cloudy"></ion-icon>
+                    <p class="temp">84&degf</p>
+                </div>
+                <div class="card time-card">
+                    <p class="time">6 AM</p>
+                    <ion-icon name="cloudy"></ion-icon>
+                    <p class="temp">84&degf</p>
+                </div>
+                <div class="card time-card">
+                    <p class="time">6 AM</p>
+                    <ion-icon name="cloudy"></ion-icon>
+                    <p class="temp">84&degf</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Script -->
+    <script src="script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
