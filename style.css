@@ -93,6 +93,11 @@ html {
   scroll-behavior: smooth;
   background: var(--background);
 }
+body{
+  font-size: 16px;
+  margin: 0;
+
+}
 header{
   position: fixed;
   top: 0;
@@ -162,27 +167,35 @@ header img{
 .card{
   background-color: var(--surface);
 }
+/* ================================= GRID STYLING MAIN CONTAINER =========================================== */
 /* Main Container */
 .main-container{
-  gap: 2rem;
-  margin: 0;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: 22.7rem 50rem 50rem;
+  gap: .6rem;
+  margin: 6rem 2rem 1rem 2rem;
+  height: 100vh;
 }
-
+/* Media query for smaller screens (adjust the max-width as needed) */
+@media screen and (max-width: 768px) {
+  .main-container {
+    grid-template-columns: 1fr; /* Display one column for smaller screens */
+    grid-template-rows: auto; /* Adjust rows based on content */
+  }
+}
+/* -----------------------------------------FIRST GRIDE ITEM NOW-CONTAINER ---------------------------------- */
 .now-container{
-  display: flex;
-  width: 100%;
-  margin: 0;
-  overflow-x: hidden;
+  grid-column: 1;
+  align-items: center;
 }
 .left-now-container{
-  position: relative;
+  display: flex;
+  flex-direction: column;
   flex: 0 0 350px;
-  margin: 8rem 2rem 5rem 5rem;
   padding: 25px;
+  margin: 25px;
   border-radius: 15px;
-  /* border: 2px solid white; */
-  width: 100%;
   color: white;
   align-self: start;
 }
@@ -193,18 +206,13 @@ header img{
   margin: 1rem 0;
 }
 .left-now-container #weather-descripiton{
-  margin: .3rem 0;
+  text-align: left;
+  border-bottom: 1px solid var(--outline);
+  margin-top: 1rem; /* Adjust as needed to control the space above the line */
+  padding-bottom: .8rem; /* Adjust as needed to control the space below the line */
+  width: 23rem; /* Adjust the width as needed */
 }
-/* Create horizontal line */
-.left-now-container #weather-descripiton::after{
-  content: '';
-  position:absolute;
-  background: var(--outline);
-  height: 1px;
-  left: .7rem;
-  bottom: 105px;
-  width: 92%;
-}
+
 .left-now-container .day-location{
   margin: 2rem 0 .5rem 0;
   color: var(--on-surface-variant);
@@ -223,21 +231,28 @@ header img{
 .left-now-container .day-location #location{
   display: flex;
 }
-/* Main Content */
+/* -----------------------------------END OF FIRST GRID ITEM NOW-CONTAINER -------------------------- */
+
+
+/* ----------------------------------SECOND ITEM TODAYS-CONTAINER ---------------------------------- */
+
+.today-highlights-container{
+  grid-column: 2 / 4;
+  grid-row: 1;
+}
 .right-now-container{
   color: white;
   flex: 1 1 300px;
-  margin: 8rem 5rem 0 0;
   border-radius: 15px;
-  padding: 10px;  
+  padding-top: 1rem;
+  margin: 25px 25px 25px 0;
   align-self: start;
   /* border: 2px solid green;  */
 }
-
 /* Todays Highlights */
 .right-now-container h2{
   padding-left: 1rem;
-  margin-top: 1rem;
+  margin-top: .1rem;
 }
 /* resused */
 .card-sm{background-color: var(--black-alpha-10);}
@@ -245,7 +260,6 @@ header img{
 .title{color: var(--on-surface-variant);}
 .right-top-now-container{
   display: flex;
-  width: 100%;
 }
 .air-quality-index{
   padding: 1rem;
@@ -317,24 +331,28 @@ header img{
   justify-content: space-evenly;
   margin-top: 2rem;
 }
+/* ----------------------------------END SECOND GRIDE ITEM TODAYS-CONTAINER ----------------------------- */
 
-/* 5 day cast container */
-.left-containerfive{
-  position: absolute;
-  border-radius: 15px;
-  margin: 0 2rem 0 5rem;
-  padding: 25px;
-  width: 350px;
-  top: 31rem;
-
+/* ----------------------------------THIRD GRIDE ITEM NOW-CONTAINER ---------------------------------- */
+.left-five-container{
+  grid-column: 1;
+  grid-row: 2;
 }
 .left-five-container h2{
-  position: absolute;
-  margin: 0 2rem 0 5rem;
+  margin: 5px 0 .8rem 1.8rem;
   color: white;
-  top: 28.5rem;
-  padding-left: .7rem;
 }
+.left-containerfive{
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 350px;
+  padding: 25px;
+  margin: 0 25px 25px 25px;
+  border-radius: 15px;
+  color: white;
+  align-self: start; 
+}
+
 .cast-container{
   display: flex;
   color: var(--on-surface-variant);
@@ -360,32 +378,29 @@ header img{
 .cast-container:last-child{
   margin: 0;
 }
+/* ----------------------------------END THRID GRIDE ITEM 5DAYCAST-CONTAINER ----------------------------- */
 
+/* ----------------------------------FOURTH GRIDE ITEM TODAYAT-CONTAINER ---------------------------------- */
 
 /* today-at container */
 .today-at-container{
-  position: relative;
-  display: flex;
+  grid-column: 2/4;
+  grid-row: 2;
 }
 .today-at-container h2{
-  position: relative;
-  margin: 0 2rem 0 5rem;
+  margin: 7rem 2rem 1.5rem .6rem;
   color: white;
-  top: 1rem;
-  left: 24rem;
 }
 .today-at-cards-container{
   display: flex;
-  position: relative;
   flex-direction: row;
-  top:3rem;
-  left: 15.56rem;
   justify-content: space-between;
   color: white;
-  flex: 0 1 70rem;
-  width: 80%;
+  flex: 1 1 300px;
   border-radius: 15px;
-  margin-right: 1rem;
+  align-items: center;
+  margin: 0rem 25px 0 0;
+  height: 10rem;
   padding: 10px;  
   background-color: var(--surface);
 }
@@ -395,7 +410,6 @@ header img{
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-right: 2rem;
   padding: 20px 5px;
   border-radius: 15px;
   height: 8.3rem;
