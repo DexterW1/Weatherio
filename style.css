@@ -146,7 +146,7 @@ header img{
   font-size: 1.5rem;
 }
 .search-container input{
-  color: black;
+  color: var(--white);
   margin-left: 1rem;
   width: 40%;
   height: 2.5rem;
@@ -162,6 +162,7 @@ header img{
 .search-container button:active{
   transform: translateY(2px);
 }
+
 
 /* Reused Style */
 .card{
@@ -204,6 +205,9 @@ header img{
   font-size: 4.5rem;
   justify-content: space-between;
   margin: 1rem 0;
+}
+.left-now-container img{
+  
 }
 .left-now-container #weather-descripiton{
   text-align: left;
@@ -320,7 +324,7 @@ header img{
   width: 100%;
 }
 
-.right-bottom-now-container .humidity,.pressure,.visibility,.feels-like{
+.right-bottom-now-container .humidity,.pressure,.visibility,.feels_like{
   margin: 1rem;
   flex:1;
   padding: 1rem;
@@ -366,10 +370,14 @@ header img{
   align-items: center;
   justify-content: center;
 }
-.cast-container .cast-icon-temp ion-icon{
+/* .cast-container .cast-icon-temp ion-icon{
   padding-right: 10px;
   font-size: 1.8rem;
   color: white;
+} */
+.cast-container .cast-icon-temp img{
+  padding-right: 10px;
+  width: 4rem;
 }
 .cast-container .cast-icon-temp p{
   font-size: 1.8rem;
@@ -388,7 +396,7 @@ header img{
   grid-row: 2;
 }
 .today-at-container h2{
-  margin: 7rem 2rem 1.5rem .6rem;
+  margin: 7.8rem 2rem 0rem 1rem;
   color: white;
 }
 .today-at-cards-container{
@@ -399,8 +407,8 @@ header img{
   flex: 1 1 300px;
   border-radius: 15px;
   align-items: center;
-  margin: 0rem 25px 0 0;
-  height: 10rem;
+  margin: 20px 25px 0 0;
+  height: 16rem;
   padding: 10px;  
   background-color: var(--surface);
 }
@@ -409,10 +417,12 @@ header img{
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  gap: 1rem;
+  width: 8rem;
   padding: 20px 5px;
   border-radius: 15px;
-  height: 8.3rem;
+  height: 12rem;
 }
 .time-card .time{
   font-size: 1rem;

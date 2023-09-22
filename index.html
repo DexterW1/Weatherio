@@ -24,8 +24,8 @@
             <div class="card left-now-container">
                 <h2>Now</h2>
                 <div class="temp-and-icon">
-                    <p>80&degf</p>
-                    <ion-icon name="sunny"></ion-icon>
+                    <p id="temp">80&degf</p>
+                    <img src="images/01d.png" alt="sunny">
                 </div>
                 <p id="weather-descripiton">Sunny</p>
                 <div class="day-location">
@@ -51,7 +51,7 @@
                             <span class="material-symbols-outlined">air</span>
                             <div class="info1">
                                 <p id="subtitle">PM2.5</p>
-                                <p class="data PM2.5 value">177</p>
+                                <p class="data PM25 value">177</p>
                             </div>
                             <div class="info2">
                                 <p id="subtitle">SO2</p>
@@ -119,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-sm feels-like">
+                    <div class="card-sm feels_like">
                         <div class="title">
                             <h3>Feels-Like</h3>
                         </div>
@@ -131,7 +131,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="left-five-container">
@@ -139,7 +138,8 @@
             <div class="card left-containerfive">
                 <div class="cast-container first-day-cast">
                     <div class="cast-icon-temp">
-                        <ion-icon name="cloudy"></ion-icon>
+                        <img src="images/01d.png" alt="sunny">
+                        <!-- <ion-icon name="cloudy"></ion-icon> -->
                         <p class="fivecast-temp">73&degf</p>
                     </div>
                     <p class="fivecast-date">21 Sep</p>
@@ -147,7 +147,8 @@
                 </div>
                 <div class="cast-container second-day-cast">
                     <div class="cast-icon-temp">
-                        <ion-icon name="sunny"></ion-icon>
+                        <!-- <ion-icon name="sunny"></ion-icon> -->
+                        <img src="images/01d.png" alt="rainy">
                         <p class="fivecast-temp">73&degf</p>
                     </div>
                     <p class="fivecast-date">22 Sep</p>
@@ -155,7 +156,8 @@
                 </div>
                 <div class="cast-container third-day-cast">
                     <div class="cast-icon-temp">
-                        <ion-icon name="thunderstorm"></ion-icon>
+                        <!-- <ion-icon name="thunderstorm"></ion-icon> -->
+                        <img src="images/01d.png" alt="hello">
                         <p class="fivecast-temp">73&degf</p>
                     </div>
                     <p class="fivecast-date">23 Sep</p>
@@ -163,7 +165,8 @@
                 </div>
                 <div class="cast-container fourth-day-cast">
                     <div class="cast-icon-temp">
-                        <ion-icon name="moon"></ion-icon>
+                        <!-- <ion-icon name="moon"></ion-icon> -->
+                        <img src="images/01d.png" alt="sunny">
                         <p class="fivecast-temp">73&degf</p>
                     </div>
                     <p class="fivecast-date">24 Sep</p>
@@ -171,7 +174,8 @@
                 </div>
                 <div class="cast-container fifth-day-cast">
                     <div class="cast-icon-temp">
-                        <ion-icon name="rainy"></ion-icon>
+                        <!-- <ion-icon name="rainy"></ion-icon> -->
+                        <img src="images/01d.png" alt="sunny">
                         <p class="fivecast-temp">73&degf</p>
                     </div>
                     <p class="fivecast-date">25 Sep</p>
@@ -229,7 +233,7 @@
 
 
     <!-- Script -->
-    <script src="script.js"></script>
+    <script src="script.js" type="module"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

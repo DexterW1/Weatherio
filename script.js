@@ -1,0 +1,205 @@
+//================= Imports =================================
+import { fetchData, url } from "./fetchurl.js";
+//============== API keys & URL FETCH  =========================
+const geoApiKey='34115bdcf64c4755840a021732995807'
+
+
+// ============= GLOBAL VARIABLES ==================
+// let lat,long;
+//============== GLOBAL FUNCTIONS =================
+function grabDayAbrev(){
+    const currentDate = new Date();
+    const dayOfWeek = currentDate.getDay();
+    const daysOfWeek = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
+    const currentDay = daysOfWeek[dayOfWeek];
+    return currentDay;
+}
+function getDayAbbreviationFromTimestamp(timestamp) {
+    const date = new Date(timestamp * 1000);
+    const dayOfWeek = date.getDay();
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dayAbbreviation = daysOfWeek[dayOfWeek];
+    return dayAbbreviation;
+}
+function grabDay(){
+    const currentDate = new Date();
+    const dayOfWeek = currentDate.getDay();
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const currentDay = daysOfWeek[dayOfWeek];
+    return currentDay;
+}
+function grabNowDate(){
+    const currentDate = new Date();
+    const monthNames = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    const month = monthNames[currentDate.getMonth()];
+    const day = currentDate.getDate();
+    const formattedDate = `${grabDay()}, ${day} ${month}`;
+    return formattedDate;
+}
+function timeUnix(timestamp){
+    const date = new Date(timestamp * 1000);
+    const originalHours = date.getHours();
+    const hours = originalHours % 12 || 12; // Convert to 12-hour format
+    const minutes = date.getMinutes();
+    const ampm = originalHours >= 12 ? 'PM' : 'AM';
+    const formattedTime = `${hours}:${minutes} ${ampm}`;
+    return formattedTime;
+}
+function unixDayMonth(timestamp) {
+    const date = new Date(timestamp * 1000);
+    const day = date.getDate();
+    const monthNames = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    const monthIndex = date.getMonth();
+    const month = monthNames[monthIndex];
+    return `${day} ${month}`;
+}
+// ============= Search Input Code ==================
+
+
+const searchText = document.querySelector('.search-container #search');
+searchText.addEventListener('keydown',async(event)=>{
+    if(event.key=='Enter'){
+        let geoLocation = await fetchData(url.geo(searchText.value));
+        console.log(geoLocation);
+        const lat = geoLocation[1].lat;
+        const lon = geoLocation[1].lon;
+        const currWeather = await fetchCurrentWeather(lat,lon);
+        const currAirQuality = await fetchAirQuality(lat,lon);
+        const currForecast = await fetchForecast(lat,lon);
+        updateWeather(currWeather);
+        updateAirQuality(currAirQuality);
+        updateSunriseSunset(currWeather);
+        updateHumPressVisFeel(currWeather);
+        updateFiveForecast(currForecast);
+    }
+})
+function fetchCurrentWeather(lat,lon){
+    return fetchData(url.currentWeather(lat,lon));
+}
+function fetchAirQuality(lat,lon){
+    return fetchData(url.airPollution(lat,lon));
+}
+function fetchForecast(lat,lon){
+    return fetchData(url.forecast(lat,lon));
+}
+function metersToMiles(meters) {
+    const metersInAMile = 1609.34; // 1 mile is approximately 1609.34 meters
+    return meters / metersInAMile;
+}
+ 
+// ================= Update Data Left-Side Now-Container =====================
+const tempNow = document.querySelector('.temp-and-icon #temp');
+const dayNow = document.querySelector('.day-container #day');
+const imgNow = document.querySelector('.temp-and-icon img');
+const locationNow = document.querySelector('.location-container #location');
+function updateWeather(data){
+    console.log(data);
+    tempNow.innerHTML=Math.ceil(data.main.temp) + '&degf';
+    imgNow.src='images/'+data.weather[0].icon+'.png';
+    imgNow.alt=data.weather[0].description;
+    dayNow.innerHTML= `<ion-icon name="calendar-clear"></ion-icon>` + grabNowDate();
+    locationNow.innerHTML='<ion-icon name="location"></ion-icon>'+ data.name + ', '+data.sys.country;
+}
+//================================ Air Quality ===========================
+const airQualityPM = document.querySelector('.info1 .PM25');
+const airQualitySO = document.querySelector('.info2 .SO2');
+const airQualityNO = document.querySelector('.info3 .NO2');
+const airQualityO3 = document.querySelector('.info4 .O3');
+const bgColorVariable1 = getComputedStyle(document.documentElement).getPropertyValue('--bg-aqi-1');
+const bgColorVariable2 = getComputedStyle(document.documentElement).getPropertyValue('--bg-aqi-2');
+const bgColorVariable3 = getComputedStyle(document.documentElement).getPropertyValue('--bg-aqi-3');
+const bgColorVariable4 = getComputedStyle(document.documentElement).getPropertyValue('--bg-aqi-4');
+const bgColorVariable5 = getComputedStyle(document.documentElement).getPropertyValue('--bg-aqi-5');
+const colors = [bgColorVariable1,bgColorVariable2,bgColorVariable3,bgColorVariable4,bgColorVariable5];
+const airQualityElement = document.querySelector('.air #air-quality');
+const aqiDescription = ['Good','Fair','Moderate','Poor','Very Poor'];
+const airQualityText = document.querySelector('.air #air-quality');
+function updateAirQuality(data){
+    airQualityNO.innerHTML=data.list[0].components.no2;
+    airQualityPM.innerHTML=data.list[0].components.pm2_5;
+    airQualityO3.innerHTML=data.list[0].components.o3;
+    airQualitySO.innerHTML=data.list[0].components.so2;
+    airQualityElement.style.backgroundColor = colors[data.list[0].main.aqi-1];
+    airQualityText.innerHTML=aqiDescription[data.list[0].main.aqi-1];
+}
+//================================ Sunrise Sunset ===========================
+const sunriseElement = document.querySelector('.info1 .sunrise');
+const sunsetElement = document.querySelector('.info2 .sunset');
+function updateSunriseSunset(data){
+    const sunriseTime = data.sys.sunrise;
+    const sunsetTime = data.sys.sunset;
+    const resultSunrise = timeUnix(sunriseTime);
+    const resultSunset = timeUnix(sunsetTime);
+    console.log(resultSunset);
+    sunriseElement.innerHTML=resultSunrise;
+    sunsetElement.innerHTML=resultSunset;
+}
+
+//================================ Humidity,Pressure,Visibility,Feels ===========================
+const humidityText = document.querySelector('.humidity .info .info1 .data');
+const pressureText = document.querySelector('.pressure .info .info1 .data');
+const visibilityText = document.querySelector('.visibility .info .info1 .data');
+const feelslikeText = document.querySelector('.feels_like .info .info1 .data');
+function updateHumPressVisFeel(data){
+    humidityText.innerHTML= data.main.humidity+'%';
+    pressureText.innerHTML=data.main.pressure+' hPa';
+    visibilityText.innerHTML=Math.ceil(metersToMiles(data.visibility))+' mi';
+    feelslikeText.innerHTML=Math.ceil(data.main.feels_like) +'&degf';
+}
+//================================ 5 forecast  ===========================
+// Using querySelectorAll to grab all elements with the class "fivecast-temp"
+const temperatureElements = document.querySelectorAll('.fivecast-temp');
+// Using querySelectorAll to grab all elements with the class "fivecast-date"
+const dateElements = document.querySelectorAll('.fivecast-date');
+// Using querySelectorAll to grab all elements with the class "fivecast-day"
+const dayElements = document.querySelectorAll('.fivecast-day');
+const imgElements = document.querySelectorAll('.cast-icon-temp img');
+function updateFiveForecast(data){
+    console.log(data);
+    const index = [7,15,23,31,39];
+    for(let i of index){
+        if(i==7){
+            imgElements[0].src='images/'+data.list[i].weather[0].icon+'.png';
+            imgElements[0].alt=data.list[i].weather[0].description;
+            temperatureElements[0].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            dateElements[0].innerHTML=unixDayMonth(data.list[i].dt);
+            dayElements[0].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
+        }
+        else if(i==15){
+            imgElements[1].src='images/'+data.list[i].weather[0].icon+'.png';
+            imgElements[1].alt=data.list[i].weather[0].description;
+            temperatureElements[1].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            dateElements[1].innerHTML=unixDayMonth(data.list[i].dt);
+            dayElements[1].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
+        }
+        else if(i==23){
+            imgElements[2].src='images/'+data.list[i].weather[0].icon+'.png';
+            imgElements[2].alt=data.list[i].weather[0].description;
+            temperatureElements[2].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            dateElements[2].innerHTML=unixDayMonth(data.list[i].dt);
+            dayElements[2].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
+        }
+        else if(i==31){
+            imgElements[3].src='images/'+data.list[i].weather[0].icon+'.png';
+            imgElements[3].alt=data.list[i].weather[0].description;
+            temperatureElements[3].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            dateElements[3].innerHTML=unixDayMonth(data.list[i].dt);
+            dayElements[3].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
+        }
+        else if(i==39){
+            imgElements[4].src='images/'+data.list[i].weather[0].icon+'.png';
+            imgElements[4].alt=data.list[i].weather[0].description;
+            temperatureElements[4].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            dateElements[4].innerHTML=unixDayMonth(data.list[i].dt);
+            dayElements[4].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
+        }
+    }
+    console.log(data);
+}
+
