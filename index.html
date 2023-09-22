@@ -13,11 +13,26 @@
 <body>
     
     <header>
+        <img src="images/logo.png" alt="logo">
         <div class="search-container">
-            <img src="images/logo.png" alt="logo">
-            <input type="search" id="search" name="search" placeholder="Search City..." />
-            <button class="current-location"><ion-icon name="locate"></ion-icon>Current-location</button>
+            <!-- <img src="images/logo.png" alt="logo"> -->
+            <input type="search" id="search" name="search" autocomplete="off" placeholder="Search City..." />
+            <div class="autocomplete-result">
+                <ul id="autocomplete-list">
+                    <li>Text 1</li>
+                    <li>Text 2</li>
+                    <li>Text 2</li>
+                </ul>
+            </div>
+            <!-- <button class="current-location"><ion-icon name="locate"></ion-icon>Current-location</button> -->
         </div>
+        <button class="current-location"><ion-icon name="locate"></ion-icon>Current-location</button>
+        <!-- <div class="autocomplete-result">
+            <ul id="autocomplete-list">
+                <li>Text 1</li>
+                <li>Text 2</li>
+            </ul>
+        </div> -->
     </header>
     <div class="main-container">
         <div class="now-container">
@@ -149,7 +164,7 @@
                     <div class="cast-icon-temp">
                         <!-- <ion-icon name="sunny"></ion-icon> -->
                         <img src="images/02d.png" alt="rainy">
-                        <p class="fivecast-temp">73&degf</p>
+                        <p class="fivecast-temp">75&degf</p>
                     </div>
                     <p class="fivecast-date">22 Sep</p>
                     <p class="fivecast-day">Fri</p>
@@ -158,7 +173,7 @@
                     <div class="cast-icon-temp">
                         <!-- <ion-icon name="thunderstorm"></ion-icon> -->
                         <img src="images/03d.png" alt="hello">
-                        <p class="fivecast-temp">73&degf</p>
+                        <p class="fivecast-temp">71&degf</p>
                     </div>
                     <p class="fivecast-date">23 Sep</p>
                     <p class="fivecast-day">Sat</p>
@@ -167,7 +182,7 @@
                     <div class="cast-icon-temp">
                         <!-- <ion-icon name="moon"></ion-icon> -->
                         <img src="images/04d.png" alt="sunny">
-                        <p class="fivecast-temp">73&degf</p>
+                        <p class="fivecast-temp">69&degf</p>
                     </div>
                     <p class="fivecast-date">24 Sep</p>
                     <p class="fivecast-day">Sun</p>
@@ -176,7 +191,7 @@
                     <div class="cast-icon-temp">
                         <!-- <ion-icon name="rainy"></ion-icon> -->
                         <img src="images/09d.png" alt="sunny">
-                        <p class="fivecast-temp">73&degf</p>
+                        <p class="fivecast-temp">76&degf</p>
                     </div>
                     <p class="fivecast-date">25 Sep</p>
                     <p class="fivecast-day">Mon</p>

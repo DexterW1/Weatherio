@@ -79,21 +79,21 @@ searchText.addEventListener('keydown',async(event)=>{
         console.log(geoLocation);
         const lat = geoLocation[1].lat;
         const lon = geoLocation[1].lon;
-        const tomorrowWeather = await fetchDataTomorrow(lat,lon);
-        const tomorrowWeatherDaily = await fetchDataTomorrowDaily(lat,lon);
-        const currWeather = await fetchCurrentWeather(lat,lon);
-        const currAirQuality = await fetchAirQuality(lat,lon);
-        const currForecast = await fetchForecast(lat,lon);
-        console.log(tomorrowWeather);
-        updateWeather(currWeather,tomorrowWeather);
-        updateAirQuality(currAirQuality);
-        updateSunriseSunset(currWeather);
-        updateHumPressVisFeel(currWeather);
-        updateFiveForecast(currForecast,tomorrowWeatherDaily);
-        updateTodayAt(currForecast,tomorrowWeather);
-        console.log(currWeather);
-        console.log(currForecast);
-        console.log(tomorrowWeatherDaily);
+        // const tomorrowWeather = await fetchDataTomorrow(lat,lon);
+        // const tomorrowWeatherDaily = await fetchDataTomorrowDaily(lat,lon);
+        // const currWeather = await fetchCurrentWeather(lat,lon);
+        // const currAirQuality = await fetchAirQuality(lat,lon);
+        // const currForecast = await fetchForecast(lat,lon);
+        // console.log(tomorrowWeather);
+        // updateWeather(currWeather,tomorrowWeather);
+        // updateAirQuality(currAirQuality);
+        // updateSunriseSunset(currWeather);
+        // updateHumPressVisFeel(currWeather);
+        // updateFiveForecast(currForecast,tomorrowWeatherDaily);
+        // updateTodayAt(currForecast,tomorrowWeather);
+        // console.log(currWeather);
+        // console.log(currForecast);
+        // console.log(tomorrowWeatherDaily);
     }
 })
 function fetchCurrentWeather(lat,lon){
