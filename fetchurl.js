@@ -1,6 +1,6 @@
 
 const api_key = "0b36dbb17bfa775ceb8149f2441436db";
-
+const options = {method: 'GET', headers: {accept: 'application/json'}};
 /**
  * Fetch data from server
  * @param {string} URL API url
@@ -15,6 +15,25 @@ export const fetchData = async function (URL) {
     console.log(error);
   }
 }
+export const fetchDataTomorrow = async function(lat,lon){
+  try {
+    const response = await fetch(`https://api.tomorrow.io/v4/weather/forecast?location=${lat},${lon}&timesteps=1h&units=imperial&apikey=00rFwFMB1rWrDjhX1DPgv6IMZIDBrPYN`,options);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+export const fetchDataTomorrowDaily = async function(lat,lon){
+  try {
+    const response = await fetch(`https://api.tomorrow.io/v4/weather/forecast?location=${lat},${lon}&timesteps=1d&units=imperial&apikey=00rFwFMB1rWrDjhX1DPgv6IMZIDBrPYN`,options);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 
 export const url = {
     currentWeather(lat, lon) {
@@ -29,6 +48,7 @@ export const url = {
     reverseGeo(lat, lon) {
       return `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=5`
     },
+
     /**
      * @param {string} query Search query e.g.: "London", "New York"
      */

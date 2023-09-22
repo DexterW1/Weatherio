@@ -1,8 +1,6 @@
 //================= Imports =================================
-import { fetchData, url } from "./fetchurl.js";
+import { fetchData, fetchDataTomorrow, fetchDataTomorrowDaily, url } from "./fetchurl.js";
 //============== API keys & URL FETCH  =========================
-const geoApiKey='34115bdcf64c4755840a021732995807'
-
 
 // ============= GLOBAL VARIABLES ==================
 // let lat,long;
@@ -48,6 +46,15 @@ function timeUnix(timestamp){
     const formattedTime = `${hours}:${minutes} ${ampm}`;
     return formattedTime;
 }
+function timeUnixHr(timestamp){
+    const date = new Date(timestamp * 1000);
+    const originalHours = date.getHours();
+    const hours = originalHours % 12 || 12; // Convert to 12-hour format
+    const minutes = date.getMinutes();
+    const ampm = originalHours >= 12 ? 'PM' : 'AM';
+    const formattedTime = `${hours} ${ampm}`;
+    return formattedTime;
+}
 function unixDayMonth(timestamp) {
     const date = new Date(timestamp * 1000);
     const day = date.getDate();
@@ -59,6 +66,9 @@ function unixDayMonth(timestamp) {
     const month = monthNames[monthIndex];
     return `${day} ${month}`;
 }
+function grabCurrentWeather(data){
+    return data.timelines.hourly[0].values.temperature;
+}
 // ============= Search Input Code ==================
 
 
@@ -69,14 +79,21 @@ searchText.addEventListener('keydown',async(event)=>{
         console.log(geoLocation);
         const lat = geoLocation[1].lat;
         const lon = geoLocation[1].lon;
+        const tomorrowWeather = await fetchDataTomorrow(lat,lon);
+        const tomorrowWeatherDaily = await fetchDataTomorrowDaily(lat,lon);
         const currWeather = await fetchCurrentWeather(lat,lon);
         const currAirQuality = await fetchAirQuality(lat,lon);
         const currForecast = await fetchForecast(lat,lon);
-        updateWeather(currWeather);
+        console.log(tomorrowWeather);
+        updateWeather(currWeather,tomorrowWeather);
         updateAirQuality(currAirQuality);
         updateSunriseSunset(currWeather);
         updateHumPressVisFeel(currWeather);
-        updateFiveForecast(currForecast);
+        updateFiveForecast(currForecast,tomorrowWeatherDaily);
+        updateTodayAt(currForecast,tomorrowWeather);
+        console.log(currWeather);
+        console.log(currForecast);
+        console.log(tomorrowWeatherDaily);
     }
 })
 function fetchCurrentWeather(lat,lon){
@@ -94,15 +111,16 @@ function metersToMiles(meters) {
 }
  
 // ================= Update Data Left-Side Now-Container =====================
+const descriptionNow = document.querySelector('.left-now-container #weather-descripiton');
 const tempNow = document.querySelector('.temp-and-icon #temp');
 const dayNow = document.querySelector('.day-container #day');
 const imgNow = document.querySelector('.temp-and-icon img');
 const locationNow = document.querySelector('.location-container #location');
-function updateWeather(data){
-    console.log(data);
-    tempNow.innerHTML=Math.ceil(data.main.temp) + '&degf';
+function updateWeather(data,tomorrowData){
+    tempNow.innerHTML=Math.round(grabCurrentWeather(tomorrowData)) + '&degf';
     imgNow.src='images/'+data.weather[0].icon+'.png';
     imgNow.alt=data.weather[0].description;
+    descriptionNow.innerHTML=data.weather[0].description
     dayNow.innerHTML= `<ion-icon name="calendar-clear"></ion-icon>` + grabNowDate();
     locationNow.innerHTML='<ion-icon name="location"></ion-icon>'+ data.name + ', '+data.sys.country;
 }
@@ -136,7 +154,6 @@ function updateSunriseSunset(data){
     const sunsetTime = data.sys.sunset;
     const resultSunrise = timeUnix(sunriseTime);
     const resultSunset = timeUnix(sunsetTime);
-    console.log(resultSunset);
     sunriseElement.innerHTML=resultSunrise;
     sunsetElement.innerHTML=resultSunset;
 }
@@ -149,8 +166,8 @@ const feelslikeText = document.querySelector('.feels_like .info .info1 .data');
 function updateHumPressVisFeel(data){
     humidityText.innerHTML= data.main.humidity+'%';
     pressureText.innerHTML=data.main.pressure+' hPa';
-    visibilityText.innerHTML=Math.ceil(metersToMiles(data.visibility))+' mi';
-    feelslikeText.innerHTML=Math.ceil(data.main.feels_like) +'&degf';
+    visibilityText.innerHTML=Math.round(metersToMiles(data.visibility))+' mi';
+    feelslikeText.innerHTML=Math.round(data.main.feels_like) +'&degf';
 }
 //================================ 5 forecast  ===========================
 // Using querySelectorAll to grab all elements with the class "fivecast-temp"
@@ -160,46 +177,68 @@ const dateElements = document.querySelectorAll('.fivecast-date');
 // Using querySelectorAll to grab all elements with the class "fivecast-day"
 const dayElements = document.querySelectorAll('.fivecast-day');
 const imgElements = document.querySelectorAll('.cast-icon-temp img');
-function updateFiveForecast(data){
-    console.log(data);
+function updateFiveForecast(data,tomorrowData){
     const index = [7,15,23,31,39];
     for(let i of index){
         if(i==7){
             imgElements[0].src='images/'+data.list[i].weather[0].icon+'.png';
             imgElements[0].alt=data.list[i].weather[0].description;
-            temperatureElements[0].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            temperatureElements[0].innerHTML=Math.round(tomorrowData.timelines.daily[1].values.temperatureMax)+'&degf';
             dateElements[0].innerHTML=unixDayMonth(data.list[i].dt);
             dayElements[0].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
         }
         else if(i==15){
             imgElements[1].src='images/'+data.list[i].weather[0].icon+'.png';
             imgElements[1].alt=data.list[i].weather[0].description;
-            temperatureElements[1].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            temperatureElements[1].innerHTML=Math.round(tomorrowData.timelines.daily[2].values.temperatureMax)+'&degf';
             dateElements[1].innerHTML=unixDayMonth(data.list[i].dt);
             dayElements[1].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
         }
         else if(i==23){
             imgElements[2].src='images/'+data.list[i].weather[0].icon+'.png';
             imgElements[2].alt=data.list[i].weather[0].description;
-            temperatureElements[2].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            temperatureElements[2].innerHTML=Math.round(tomorrowData.timelines.daily[3].values.temperatureMax)+'&degf';
             dateElements[2].innerHTML=unixDayMonth(data.list[i].dt);
             dayElements[2].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
         }
         else if(i==31){
             imgElements[3].src='images/'+data.list[i].weather[0].icon+'.png';
             imgElements[3].alt=data.list[i].weather[0].description;
-            temperatureElements[3].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            temperatureElements[3].innerHTML=Math.round(tomorrowData.timelines.daily[4].values.temperatureMax)+'&degf';
             dateElements[3].innerHTML=unixDayMonth(data.list[i].dt);
             dayElements[3].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
         }
         else if(i==39){
             imgElements[4].src='images/'+data.list[i].weather[0].icon+'.png';
             imgElements[4].alt=data.list[i].weather[0].description;
-            temperatureElements[4].innerHTML=Math.ceil(data.list[i].main.feels_like)+'&degf';
+            temperatureElements[4].innerHTML=Math.round(tomorrowData.timelines.daily[5].values.temperatureMax)+'&degf';
             dateElements[4].innerHTML=unixDayMonth(data.list[i].dt);
             dayElements[4].innerHTML=getDayAbbreviationFromTimestamp(data.list[i].dt);
         }
     }
-    console.log(data);
 }
 
+//================================ Today At ===========================
+const todayTimeElement = document.querySelectorAll('.time-card .time');
+const todayTempElement = document.querySelectorAll('.time-card .temp');
+const todayImgElement = document.querySelectorAll('.time-card img');
+function updateTodayAt(imgData,tomorrowData){
+    console.log(todayTempElement);
+    let count =0;
+    for(let i =0; i<todayTimeElement.length;i++){
+        if(i==0){
+            todayTimeElement[i].innerHTML='Now';
+            todayImgElement[i].src='images/'+imgData.list[i].weather[0].icon+'.png';
+            todayImgElement[i].alt=imgData.list[i].weather[0].description;
+            todayTempElement[i].innerHTML=Math.round(tomorrowData.timelines.hourly[count].values.temperature)+'&degf';
+            count+=3;
+        }
+        else{
+            todayTimeElement[i].innerHTML=timeUnixHr(imgData.list[i].dt);
+            todayImgElement[i].src='images/'+imgData.list[i].weather[0].icon+'.png';
+            todayImgElement[i].alt=imgData.list[i].weather[0].description;
+            todayTempElement[i].innerHTML=Math.round(tomorrowData.timelines.hourly[count].values.temperature)+'&degf';
+            count+=3;
+        }
+    }
+}
