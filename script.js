@@ -1,9 +1,6 @@
 //================= Imports =================================
 import { fetchData, fetchDataTomorrow, fetchDataTomorrowDaily, url } from "./fetchurl.js";
-//============== API keys & URL FETCH  =========================
 
-// ============= GLOBAL VARIABLES ==================
-// let lat,long;
 //============== GLOBAL FUNCTIONS =================
 function grabDayAbrev(){
     const currentDate = new Date();
@@ -46,14 +43,15 @@ function timeUnix(timestamp){
     const formattedTime = `${hours}:${minutes} ${ampm}`;
     return formattedTime;
 }
-function timeUnixHr(timestamp){
-    const date = new Date(timestamp * 1000);
-    const originalHours = date.getHours();
-    const hours = originalHours % 12 || 12; // Convert to 12-hour format
-    const minutes = date.getMinutes();
-    const ampm = originalHours >= 12 ? 'PM' : 'AM';
-    const formattedTime = `${hours} ${ampm}`;
-    return formattedTime;
+function timeUnixHr(datestring){
+  const date = new Date(datestring);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+
+  const formattedTime = `${formattedHours} ${ampm}`;
+  return formattedTime;
 }
 function unixDayMonth(timestamp) {
     const date = new Date(timestamp * 1000);
@@ -71,31 +69,74 @@ function grabCurrentWeather(data){
 }
 // ============= Search Input Code ==================
 
-
 const searchText = document.querySelector('.search-container #search');
-searchText.addEventListener('keydown',async(event)=>{
-    if(event.key=='Enter'){
-        let geoLocation = await fetchData(url.geo(searchText.value));
-        console.log(geoLocation);
-        const lat = geoLocation[1].lat;
-        const lon = geoLocation[1].lon;
-        // const tomorrowWeather = await fetchDataTomorrow(lat,lon);
-        // const tomorrowWeatherDaily = await fetchDataTomorrowDaily(lat,lon);
-        // const currWeather = await fetchCurrentWeather(lat,lon);
-        // const currAirQuality = await fetchAirQuality(lat,lon);
-        // const currForecast = await fetchForecast(lat,lon);
-        // console.log(tomorrowWeather);
-        // updateWeather(currWeather,tomorrowWeather);
-        // updateAirQuality(currAirQuality);
-        // updateSunriseSunset(currWeather);
-        // updateHumPressVisFeel(currWeather);
-        // updateFiveForecast(currForecast,tomorrowWeatherDaily);
-        // updateTodayAt(currForecast,tomorrowWeather);
-        // console.log(currWeather);
-        // console.log(currForecast);
-        // console.log(tomorrowWeatherDaily);
+const autocompleteList = document.querySelector('.autocomplete-result #autocomplete-list');
+const displayResult = document.querySelector('.autocomplete-result');
+searchText.addEventListener('input',async ()=>{
+    displayResult.style.display='block';
+    let geoLocation = await fetchData(url.geo(searchText.value));
+    autocompleteList.innerHTML='';
+    for(let location of geoLocation){
+        const li=document.createElement('li');
+        if(location.state===undefined){
+            const cityName = `${location.name}, ${location.country}`;
+            li.className = 'clickId';
+            li.innerHTML = cityName;
+            li.setAttribute('data-lat', location.lat);
+            li.setAttribute('data-lon', location.lon);
+            li.addEventListener('click', () => {
+                searchText.value=li.textContent;
+                displayResult.style.display='none';
+                updateAll(li.getAttribute('data-lat'),li.getAttribute('data-lon'));
+            });
+        }
+        else{
+            const cityName = `${location.name}, ${location.state}, ${location.country}`;
+            li.className='clickId';
+            li.innerHTML=cityName;
+            li.setAttribute('data-lat', location.lat);
+            li.setAttribute('data-lon', location.lon);
+            li.addEventListener('click', () => {
+                searchText.value=li.textContent;
+                displayResult.style.display='none';
+                updateAll(li.getAttribute('data-lat'),li.getAttribute('data-lon'));
+            });
+        }
+        autocompleteList.appendChild(li);
     }
-})
+});
+//================================ My-location ========================================
+const mylocationBtn = document.querySelector('.current-location');
+mylocationBtn.addEventListener('click',async()=>{
+
+    if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            updateAll(lat,lon);
+        }, (error) => {
+            console.error('Error getting location:', error);
+        });
+    } else {
+        console.error('Geolocation is not available in this browser.');
+    }
+});
+
+//============================== Update Functions =====================================
+async function updateAll(lat,lon){
+    const tomorrowWeather = await fetchDataTomorrow(lat,lon);
+    const tomorrowWeatherDaily = await fetchDataTomorrowDaily(lat,lon);
+    const currWeather = await fetchCurrentWeather(lat,lon);
+    const currAirQuality = await fetchAirQuality(lat,lon);
+    const currForecast = await fetchForecast(lat,lon);
+    updateWeather(currWeather,tomorrowWeather);
+    updateAirQuality(currAirQuality);
+    updateSunriseSunset(currWeather);
+    updateHumPressVisFeel(currWeather);
+    updateFiveForecast(currForecast,tomorrowWeatherDaily);
+    updateTodayAt(currForecast,tomorrowWeather);
+}
+
 function fetchCurrentWeather(lat,lon){
     return fetchData(url.currentWeather(lat,lon));
 }
@@ -223,7 +264,6 @@ const todayTimeElement = document.querySelectorAll('.time-card .time');
 const todayTempElement = document.querySelectorAll('.time-card .temp');
 const todayImgElement = document.querySelectorAll('.time-card img');
 function updateTodayAt(imgData,tomorrowData){
-    console.log(todayTempElement);
     let count =0;
     for(let i =0; i<todayTimeElement.length;i++){
         if(i==0){
@@ -234,7 +274,7 @@ function updateTodayAt(imgData,tomorrowData){
             count+=3;
         }
         else{
-            todayTimeElement[i].innerHTML=timeUnixHr(imgData.list[i].dt);
+            todayTimeElement[i].innerHTML=timeUnixHr(tomorrowData.timelines.hourly[count].time);
             todayImgElement[i].src='images/'+imgData.list[i].weather[0].icon+'.png';
             todayImgElement[i].alt=imgData.list[i].weather[0].description;
             todayTempElement[i].innerHTML=Math.round(tomorrowData.timelines.hourly[count].values.temperature)+'&degf';
