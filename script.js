@@ -38,7 +38,7 @@ function timeUnix(timestamp){
     const date = new Date(timestamp * 1000);
     const originalHours = date.getHours();
     const hours = originalHours % 12 || 12; // Convert to 12-hour format
-    const minutes = date.getMinutes();
+    const minutes = String(date.getMinutes()).padStart(2, '0'); // Add leading zeros
     const ampm = originalHours >= 12 ? 'PM' : 'AM';
     const formattedTime = `${hours}:${minutes} ${ampm}`;
     return formattedTime;

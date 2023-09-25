@@ -124,7 +124,7 @@ header img{
 header button{
   display: flex;
   position: relative;
-  width: 10rem;
+  width: 12rem;
   min-width: 8rem;
   height: 2.5rem;
   align-items: center;
