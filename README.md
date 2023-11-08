@@ -9,7 +9,7 @@ Welcome to the Dynamic Weather Application! This project was created using funda
 
 ## Acknowledgements
 
-- **Design and Assets:** The design and assets for this project were inspired by a tutorial from [Guy's Name] on YouTube. The icons, color schemes, and layout were adapted from their tutorial available at [YouTube Tutorial Link](https://www.youtube.com/watch?v=QMwyNnjAils&t=155s).
+- **Design and Assets:** The design and assets for this project were inspired by a tutorial from codewithsadee on YouTube. The icons, color schemes, and layout were adapted from their tutorial available at [YouTube Tutorial Link](https://www.youtube.com/watch?v=QMwyNnjAils&t=155s).
   
   **Note:** While the design elements and assets were inspired by the tutorial, all the code and implementation in this project are original and developed independently. I did not refer to or use the actual code from the tutorial, only taking inspiration from the design, icons, and layout presented in the tutorial.
 
